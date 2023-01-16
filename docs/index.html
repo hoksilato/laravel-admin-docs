@@ -63,6 +63,19 @@
         pathNamespaces: ['/zh', '/en'],
       },
 
+      pagination: {
+        previousText: {
+          '/en/': 'PREVIOUS',
+          '/zh/': '上一章节'
+        },
+        nextText: {
+          '/en/': 'NEXT',
+          '/zh/': '下一章节'
+        },
+        crossChapter: true,
+        crossChapterText: true,
+      },
+
       loadSidebar: true,
       name: 'Laravel Admin',
       repo: 'https://github.com/newhorizon-tech-vn/laravel-admin-docs.git'
@@ -72,6 +85,17 @@
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+  <!-- reference https://github.com/jperasmus/docsify-copy-code -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
+  <!-- reference https://github.com/imyelo/docsify-pagination -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+  <!-- reference https://docsify.js.org/#/language-highlight -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-js.min.js"></script>
 </body>
 
 </html>
