@@ -24,6 +24,7 @@
   - [API tester](/en/extension-api-tester.md)
   - [Config manager](/en/extension-config.md)
   - [Task scheduling](/en/extension-scheduling.md)
+- [Content message](/en/content-message.md)
 - [Widgets](/en/widgets.md)
 - [CSS/JavaScript](/en/frontend.md)
 - [Permissions](/en/permission.md)
