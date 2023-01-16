@@ -12,6 +12,7 @@
 
 <body>
   <nav>
+    <a href="#/">HOME</a>
     <a href="#/en/">EN</a>
     <a href="#/zh/">简体中文</a>
   </nav>
@@ -76,6 +77,31 @@
         crossChapterText: true,
       },
 
+      plugins: [
+        function (hook, vm) {
+          hook.beforeEach(function (html) {
+            if (/githubusercontent\.com/.test(vm.route.file)) {
+              url = vm.route.file
+                .replace('raw.githubusercontent.com', 'github.com')
+                .replace(/\/main/, '/blob/main');
+            } else if (/jsdelivr\.net/.test(vm.route.file)) {
+              url = vm.route.file
+                .replace('cdn.jsdelivr.net/gh', 'github.com')
+                .replace('@main', '/blob/main');
+            } else {
+              url =
+                'https://github.com/newhorizon-tech-vn/laravel-admin-docs/blob/main/docs/' +
+                vm.route.file;
+            }
+            var editHtml = '[:memo: Edit Document](' + url + ')\n';
+            return (
+              editHtml +
+              html
+            );
+          })
+        },
+      ],
+
       loadSidebar: true,
       name: 'Laravel Admin',
       repo: 'https://github.com/newhorizon-tech-vn/laravel-admin-docs.git'
@@ -95,7 +121,7 @@
   <!-- reference https://docsify.js.org/#/language-highlight -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-js.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
 </body>
 
 </html>
