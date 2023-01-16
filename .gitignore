@@ -1,0 +1,5 @@
+.DS_Store
+*.project
+.idea/
+.php_cs.cache
+.vscode/
