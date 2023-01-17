@@ -2,6 +2,8 @@
 - Getting started
   - [Installation](/en/installation.md)
   - [Quick start](/en/quick-start.md)
+  - [Configuration](/en/configuration.md)
+  - [Upgrading](/en/upgrading.md)
   - [Page content & Layout](/en/content-layout.md)
 - Model grid
   - [Basic usage](/en/model-grid.md)
