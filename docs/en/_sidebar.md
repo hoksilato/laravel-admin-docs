@@ -18,6 +18,7 @@
   - [Form validation](/en/model-form-validation.md)
   - [Save callback](/en/model-form-callback.md)
 - Admin extensions
+  - [Extension development](/en/extension-development.md)
   - [Helpers](/en/extension-helpers.md)
   - [Media manager](/en/extension-media-manager.md)
   - [API tester](/en/extension-api-tester.md)
