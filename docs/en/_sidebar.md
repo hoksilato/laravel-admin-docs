@@ -14,11 +14,16 @@
   - [Data export](/en/model-grid-export.md)
 - Model form
   - [Basic usage](/en/model-form.md)
-  - [Image/File upload](/en/model-form-upload.md)
   - [Form fields](/en/model-form-fields.md)
+  - [Image/File upload](/en/model-form-upload.md)
+  - [JSON fields](/en/model-form-json.md)
+  - [Relationship](/en/model-form-relationship.md)
+  - [Form linkage](/en/model-form-linkage.md)
   - [Form field management](/en/model-form-field-management.md)
   - [Form validation](/en/model-form-validation.md)
-  - [Save callback](/en/model-form-callback.md)
+  - [Form callback](/en/model-form-callback.md)
+  - [Form initialization](/en/model-form-initialization.md)
+  - [Form layout](/en/model-form-layout.md)
 - Model show
   - [Basic usage](/en/model-show.md)
   - [Fields](/en/model-show-fields.md)
