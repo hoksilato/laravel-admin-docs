@@ -19,6 +19,11 @@
   - [Form field management](/en/model-form-field-management.md)
   - [Form validation](/en/model-form-validation.md)
   - [Save callback](/en/model-form-callback.md)
+- Model show
+  - [Basic usage](/en/model-show.md)
+  - [Fields](/en/model-show-fields.md)
+  - [Relationship](/en/model-show-relationship.md)
+  - [Extension](/en/model-show-extension.md)
 - Admin extensions
   - [Extension development](/en/extension-development.md)
   - [Helpers](/en/extension-helpers.md)
