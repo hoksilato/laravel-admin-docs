@@ -25,7 +25,7 @@ class CustomUserProvider implements UserProvider
 
     public function retrieveByCredentials(array $credentials)
     {
-        // Use $credentials to get the user data, and then return an object implements interface `Illuminate\Contracts\Auth\Authenticatable` 
+        // Use $credentials to get the user data, and then return an object implements interface `Illuminate\Contracts\Auth\Authenticatable`
     }
 
     public function validateCredentials(Authenticatable $user, array $credentials)
@@ -39,25 +39,23 @@ class CustomUserProvider implements UserProvider
 In the methods `retrieveByCredentials` and `validateCredentials` the parameter `$credentials` is the user name and password array submitted on the login page, you can use `$credentials` to implement your own login logic.
 
 The definition of interface `Illuminate\Contracts\Auth\Authenticatable`:
+
 ```php
 <?php
 
 namespace Illuminate\Contracts\Auth;
 
 interface Authenticatable {
-
     public function getAuthIdentifierName();
     public function getAuthIdentifier();
     public function getAuthPassword();
     public function getRememberToken();
     public function setRememberToken($value);
     public function getRememberTokenName();
-
 }
 ```
 
 For more details about custom authentication please refer to [adding-custom-user-providers](https://laravel.com/docs/5.5/authentication#adding-custom-user-providers).
-
 
 After you created cusom user provider, you will need to extend Laravel with it:
 
@@ -81,7 +79,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Auth::provider('custom', function ($app, array $config) {
-            
             // Return an instance of Illuminate\Contracts\Auth\UserProvider...
             return new CustomUserProvider();
         });
@@ -108,4 +105,5 @@ Finally modify the configuration, open `config/admin.php`, find the `auth` part:
         ],
     ],
 ```
+
 This completes the logic of custom authentication.

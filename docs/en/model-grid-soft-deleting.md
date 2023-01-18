@@ -83,11 +83,9 @@ Add to row actions:
 use App\Admin\Actions\Post\Restore;
 
 $grid->actions (function ($actions) {
-
-    if (\ request('_ scope_') == 'trashed') {
+    if (request('_ scope_') == 'trashed') {
         $actions->add(new Restore());
     }
-
 });
 ```
 
@@ -127,10 +125,8 @@ Add to batch operation:
 use App\Admin\Actions\Post\BatchRestore;
 
 $grid->batchActions (function($batch) {
-
-    if (\request('_scope_') == 'trashed') {
+    if (request('_scope_') == 'trashed') {
         $batch->add(new BatchRestore());
     }
-
 });
 ```

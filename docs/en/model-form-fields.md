@@ -5,26 +5,31 @@ There are a lots of form components built into the `model-form` to help you quic
 ## Public methods
 
 ### Set the value to save
+
 ```php
 $form->text('title')->value('text...');
 ```
 
 ### Set default value
+
 ```php
 $form->text('title')->default('text...');
 ```
 
 ### Set help message
+
 ```php
 $form->text('title')->help('help...');
 ```
 
 ### Set fa-icon class
+
 ```php
 $form->text('title')->icon('fa-copy');
 ```
 
 ### Set attributes of field element
+
 ```php
 $form->text('title')->attribute(['data-title' => 'title...']);
 
@@ -32,8 +37,39 @@ $form->text('title')->attribute('data-title', 'title...');
 ```
 
 ### Set placeholder
+
 ```php
 $form->text('title')->placeholder('Please input...');
+```
+
+### Set required
+
+```php
+$form->text('title')->required();
+```
+
+### Setting pattern
+
+```php
+$form->text('title')->pattern('[A-z]{3}');
+```
+
+### Setting readonly
+
+```php
+$form->text('title')->readonly();
+```
+
+### Setting disable
+
+```php
+$form->text('title')->disable();
+```
+
+### Setting autofocus
+
+```php
+$form->text('title')->autofocus();
 ```
 
 ### Model-form-tab
@@ -41,40 +77,86 @@ $form->text('title')->placeholder('Please input...');
 If the form contains too many fields, will lead to form page is too long, in which case you can use the tab to separate the form:
 
 ```php
-
 $form->tab('Basic info', function ($form) {
-    
     $form->text('username');
     $form->email('email');
-    
 })->tab('Profile', function ($form) {
-                       
    $form->image('avatar');
    $form->text('address');
    $form->mobile('phone');
-   
 })->tab('Jobs', function ($form) {
-                         
-     $form->hasMany('jobs', function () {
-         $form->text('company');
-         $form->date('start_date');
-         $form->date('end_date');
-     });
-
-  })
-
+    $form->hasMany('jobs', function () {
+        $form->text('company');
+        $form->date('start_date');
+        $form->date('end_date');
+    });
+});
 ```
 
 ## Text input
+
+![](https://user-images.githubusercontent.com/1479100/82288328-d3938b80-99d4-11ea-91ec-4915d48d6057.png)
 
 ```php
 $form->text($column, [$label]);
 
 // Add a submission validation rule
 $form->text($column, [$label])->rules('required|min:10');
+
+// Set FontAwesome icon
+$form->text($column, [$label])->icon('fa-pencil');
+
+// Set datalist
+$form->text($column, [$label])->datalist(['key' => 'value']);
+
+// Set inputmask, see https://github.com/RobinHerbots/Inputmask
+$form->text('code')->inputmask(['mask' => '99-9999999']);
+```
+
+## Textarea
+
+![textarea](https://user-images.githubusercontent.com/1479100/82288329-d3938b80-99d4-11ea-9066-41e163824995.png)
+
+```php
+$form->textarea($column[, $label])->rows(10);
+```
+
+## Radio
+
+![radio](https://user-images.githubusercontent.com/1479100/82288325-d1c9c800-99d4-11ea-8403-90b0b73526bf.png)
+
+```php
+$form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m');
+
+$form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m')->stacked();
+```
+
+## Checkbox
+
+![checkbox](https://user-images.githubusercontent.com/1479100/82288312-cd051400-99d4-11ea-86cb-dc1f36c1f1a5.png)
+
+`checkbox` can store values in two ways, see [multiple select](/en/model-form-fields.md?id=multiple-select)
+
+The `options()` method is used to set options:
+
+```php
+$form->checkbox($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
+
+$form->checkbox($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name'])->stacked();
+
+// Setting options through closures
+$form->checkbox($column[, $label])->options(function () {
+    return [1 => 'foo', 2 => 'bar', 'val' => 'Option name'];
+});
+
+// If there are too many options, you can add a full checkbox to it.
+$form->checkbox($column[, $label])->options([])->canCheckAll();
 ```
 
 ## Select
+
+![select](https://user-images.githubusercontent.com/1479100/82288327-d2faf500-99d4-11ea-9b34-68386b1ebaf6.png)
+
 ```php
 $form->select($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
 ```
@@ -91,15 +173,13 @@ $form->select('user_id')->options(function ($id) {
 })->ajax('/admin/api/users');
 
 // using ajax and show selected item:
-
 $form->select('user_id')->options(User::class)->ajax('/admin/api/users');
 
 // or specifying the name and id
-
 $form->select('user_id')->options(User::class, 'name', 'id')->ajax('/admin/api/users');
 ```
 
-<sub>Notice：if you have modified the value of the `route.prefix` in the `config/admin.php` file, this api route should be modified to `config('admin.route.prefix').'/api/users'`.</sub>
+> **Notice**：if you have modified the value of the `route.prefix` in the `config/admin.php` file, this api route should be modified to `config('admin.route.prefix').'/api/users'`.
 
 The controller method for api `/admin/api/users` is:
 
@@ -114,7 +194,8 @@ public function users(Request $request)
 ```
 
 The json returned from api `/admin/demo/options`:
-```
+
+```json
 {
     "total": 4,
     "per_page": 15,
@@ -145,19 +226,19 @@ The json returned from api `/admin/demo/options`:
 }
 ```
 
-### Select linkage
+### Cascading select
 
 `select` component supports one-way linkage of parent-child relationship:
+
 ```php
 $form->select('province')->options(...)->load('city', '/api/city');
 
 $form->select('city');
-
 ```
 
-Where `load('city', '/api/city');` means that, after the current select option is changed, the current option will call the api `/api/city` via the argument` q` api returns the data to fill the options for the city selection box, where api `/api/city` returns the data format that must match:
+Where `load('city', '/api/city');` means that, after the current select option is changed, the current option will call the api `/api/city` via the argument `q` api returns the data to fill the options for the city selection box, where API `/api/city` returns the data format that must match:
 
-```php
+```json
 [
     {
         "id": 1,
@@ -170,6 +251,7 @@ Where `load('city', '/api/city');` means that, after the current select option i
     ...
 ]
 ```
+
 The code for the controller action is as follows:
 
 ```php
@@ -182,22 +264,22 @@ public function city(Request $request)
 ```
 
 ## Multiple select
+
+![multiple select](https://user-images.githubusercontent.com/1479100/82288323-d1313180-99d4-11ea-83f3-16c192e30ec2.png)
+
 ```php
 $form->multipleSelect($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
 
 // using ajax and show selected items:
-
 $form->multipleSelect($column[, $label])->options(Model::class)->ajax('ajax_url');
 
 // or specifying the name and id
-
 $form->multipleSelect($column[, $label])->options(Model::class, 'name', 'id')->ajax('ajax_url');
 ```
 
 You can store value of multiple select in two ways, one is `many-to-many` relation.
 
-```
-
+```php
 class Post extends Models
 {
     public function tags()
@@ -207,10 +289,26 @@ class Post extends Models
 }
 
 $form->multipleSelect('tags')->options(Tag::all()->pluck('name', 'id'));
-
 ```
 
 The second is to store the option array into a single field. If the field is a string type, it is necessary to define [accessor and Mutator](https://laravel.com/docs/5.5/eloquent-mutators) for the field.
+
+For example, the field `tags` is stored as a string and separated by a comma (`,`), then its accessors and modifiers are defined as follows:
+
+```php
+class Post extends Model
+{
+    public function getTagsAttribute($value)
+    {
+        return explode(',', $value);
+    }
+
+    public function setTagsAttribute($value)
+    {
+        $this->attributes['tags'] = implode(',', $value);
+    }
+}
+```
 
 If have too many options, you can load option by ajax
 
@@ -224,7 +322,7 @@ $form->select('user_id')->options(function ($id) {
 })->ajax('/admin/api/users');
 ```
 
-<sub>Notice：If you have modified the value of the `route.prefix` in the `config/admin.php` file, this api route should be modified to `config('admin.route.prefix').'/api/users'`.</sub>
+> **Notice**：If you have modified the value of the `route.prefix` in the `config/admin.php` file, this api route should be modified to `config('admin.route.prefix').'/api/users'`.
 
 The controller method for api `/admin/api/users` is:
 
@@ -235,11 +333,11 @@ public function users(Request $request)
 
     return User::where('name', 'like', "%$q%")->paginate(null, ['id', 'name as text']);
 }
-
 ```
 
 The json returned from api `/admin/demo/options`:
-```
+
+```json
 {
     "total": 4,
     "per_page": 15,
@@ -272,74 +370,76 @@ The json returned from api `/admin/demo/options`:
 
 ## Listbox
 
+![listbox](https://user-images.githubusercontent.com/1479100/82287107-f8d2ca80-99d1-11ea-90a2-8efa9c5ff224.png)
+
 The usage is as same as mutipleSelect.
 
 ```php
 $form->listbox($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
-```
 
-## Textarea
-```php
-$form->textarea($column[, $label])->rows(10);
-```
-
-## Radio
-```php
-$form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m');
-
-$form->radio($column[, $label])->options(['m' => 'Female', 'f'=> 'Male'])->default('m')->stacked();
-```
-
-## Checkbox
-
-`checkbox` can store values in two ways, see[multiple select](#Multiple select)
-
-The `options()` method is used to set options:
-```php
-$form->checkbox($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name']);
-
-$form->checkbox($column[, $label])->options([1 => 'foo', 2 => 'bar', 'val' => 'Option name'])->stacked();
+// Set height
+$form->listbox($column[, $label])->height(200);
 ```
 
 ## Email input
+
 ```php
 $form->email($column[, $label]);
 ```
 
 ## Password input
+
+![password](https://user-images.githubusercontent.com/1479100/82288324-d1c9c800-99d4-11ea-9085-c510ab007a20.png)
+
 ```php
 $form->password($column[, $label]);
 ```
 
 ## URL input
+
+![url input](https://user-images.githubusercontent.com/1479100/82288331-d42c2200-99d4-11ea-9e68-39eb6341afdc.png)
+
 ```php
 $form->url($column[, $label]);
 ```
 
-## Ip input
+## IP input
+
+![IP input](https://user-images.githubusercontent.com/1479100/82288319-d0000480-99d4-11ea-96d8-92d8c7e7f1fe.png)
+
 ```php
 $form->ip($column[, $label]);
 ```
 
 ## Phone number input
+
+![phone input](https://user-images.githubusercontent.com/1479100/82288321-d0989b00-99d4-11ea-847a-818ce7d419db.png)
+
 ```php
 $form->mobile($column[, $label])->options(['mask' => '999 9999 9999']);
 ```
 
 ## Color select
+
+![color select](https://user-images.githubusercontent.com/1479100/82288314-ce364100-99d4-11ea-9fd6-f31991f013ad.png)
+
 ```php
 $form->color($column[, $label])->default('#ccc');
 ```
 
 ## Time input
+
 ```php
 $form->time($column[, $label]);
 
-// Set the time format, more formats reference http://momentjs.com/docs/#/displaying/format/    
+// Set the time format, more formats reference http://momentjs.com/docs/#/displaying/format/
 $form->time($column[, $label])->format('HH:mm:ss');
 ```
 
 ## Date input
+
+![date input](https://user-images.githubusercontent.com/1479100/82288315-ceced780-99d4-11ea-98cc-cb332016137d.png)
+
 ```php
 $form->date($column[, $label]);
 
@@ -348,6 +448,7 @@ $form->date($column[, $label])->format('YYYY-MM-DD');
 ```
 
 ## Datetime input
+
 ```php
 $form->datetime($column[, $label]);
 
@@ -356,120 +457,107 @@ $form->datetime($column[, $label])->format('YYYY-MM-DD HH:mm:ss');
 ```
 
 ## Time range select
-`$startTime`、`$endTime`is the start and end time fields:
+
+`$startTime`, `$endTime` is the start and end time fields:
+
 ```php
 $form->timeRange($startTime, $endTime, 'Time Range');
 ```
 
 ## Date range select
-`$startDate`、`$endDate`is the start and end date fields:
+
+`$startDate`, `$endDate` is the start and end date fields:
+
 ```php
 $form->dateRange($startDate, $endDate, 'Date Range');
 ```
 
 ## Datetime range select
-`$startDateTime`、`$endDateTime` is the start and end datetime fields:
+
+`$startDateTime`, `$endDateTime` is the start and end datetime fields:
+
 ```php
 $form->datetimeRange($startDateTime, $endDateTime, 'DateTime Range');
 ```
 
 ## Currency input
+
 ```php
 $form->currency($column[, $label]);
 
 // set the unit symbol
 $form->currency($column[, $label])->symbol('￥');
-
 ```
 
 ## Number input
+
 ```php
 $form->number($column[, $label]);
+
+// set max value
+$form->number($column[, $label])->max(100);
+
+// set min value
+$form->number($column[, $label])->min(10);
 ```
 
 ## Rate input
+
 ```php
 $form->rate($column[, $label]);
 ```
 
-## Image upload
+## Slider
 
-Before use upload field, you must complete upload configuration, see [image/file upload](/en/model-form-upload.md).
-
-You can use compression, crop, add watermarks and other methods, please refer to [[Intervention] (http://image.intervention.io/getting_started/introduction)], picture upload directory in the file `config / admin.php` `Upload.image` configuration, if the directory does not exist, you need to create the directory and open write permissions:
-```php
-$form->image($column[, $label]);
-
-// Modify the image upload path and file name
-$form->image($column[, $label])->move($dir, $name);
-
-// Crop picture
-$form->image($column[, $label])->crop(int $width, int $height, [int $x, int $y]);
-
-// Add a watermark
-$form->image($column[, $label])->insert($watermark, 'center');
-
-// add delete button
-$form->image($column[, $label])->removable();
-
-```
-
-## File upload
-
-Before use upload field, you must complete upload configuration, see [image/file upload](/en/model-form-upload.md).
-
-The file upload directory is configured in `upload.file` in the file `config/admin.php`. If the directory does not exist, it needs to be created and write-enabled.
-```php
-$form->file($column[, $label]);
-
-// Modify the file upload path and file name
-$form->file($column[, $label])->move($dir, $name);
-
-// And set the upload file type
-$form->file($column[, $label])->rules('mimes:doc,docx,xlsx');
-
-// add delete button
-$form->file($column[, $label])->removable();
-
-```
-
-## Multiple image/file upload
+Can be used to select the type of digital fields, such as age:
 
 ```php
-// multiple image
-$form->multipleImage($column[, $label]);
-
-// multiple file
-$form->multipleFile($column[, $label]);
-
-// add delete button
-$form->multipleFile($column[, $label])->removable();
+$form->slider($column[, $label])->options(['max' => 100, 'min' => 1, 'step' => 1, 'postfix' => 'years old']);
 ```
 
-The type of data submitted from multiple image/file field is array, if you the type of column in mysql table is array, or use mongodb, then you can save the array directly, 
-but if you use string type to store the array data ,you need to specify a string format, For example, if you want to use json string to store the array data, you need to define
- a mutator for the column in model mutator, such as the field named `pictures`, define mutator:
+More options please ref to https://github.com/IonDen/ion.rangeSlider#settings
+
+## Rich text editor
+
+The rich text editing component is removed after `v1.7.0` version, please choose to use the following rich text editor extension:
+
+| Extension   | URL                                                     |
+| ----------- | ------------------------------------------------------- |
+| wangEditor  | https://github.com/laravel-admin-extensions/wangEditor  |
+| wangEditor2 | https://github.com/laravel-admin-extensions/wangEditor2 |
+| UEditor     | https://github.com/laravel-admin-extensions/UEditor     |
+| Summernote  | https://github.com/laravel-admin-extensions/summernote  |
+| Quill       | https://github.com/laravel-admin-extensions/quill       |
+| CKEditor    | https://github.com/laravel-admin-extensions/ckeditor    |
+| Simditor    | https://github.com/laravel-admin-extensions/simditor    |
+
+## Hidden field
 
 ```php
-public function setPicturesAttribute($pictures)
-{
-    if (is_array($pictures)) {
-        $this->attributes['pictures'] = json_encode($pictures);
-    }
-}
-
-public function getPicturesAttribute($pictures)
-{
-    return json_decode($pictures, true);
-}
+$form->hidden($column);
 ```
-Of course, you can also specify any other format.
+
+## Switch
+
+`On` and `Off` pairs of switches with the values `1` and `0`:
+
+```php
+$states = [
+    'on'  => ['value' => 1, 'text' => 'enable', 'color' => 'success'],
+    'off' => ['value' => 0, 'text' => 'disable', 'color' => 'danger'],
+];
+
+$form->switch($column[, $label])->states($states);
+```
 
 ## Map
 
+> The map component has been deprecated and will be removed in a later release. Please use [Latitude and longitude selector plugin extension](https://github.com/laravel-admin-extensions/latlong) instead.
+
 The map field refers to the network resource, and if there is a problem with the network refer to [form Component Management](/en/model-form-field-management.md) to remove the component.
 
-Used to select the latitude and longitude, `$ latitude`,` $ longitude` for the latitude and longitude field, using Tencent map when `locale` set of laravel is` zh_CN`, otherwise use Google Maps:
+Used to select the latitude and longitude, `$latitude`, `$longitude` for the latitude and longitude field, using Tencent map when `locale` set of laravel is `zh_CN`, otherwise use Google Maps:
+
 ```php
 $form->map($latitude, $longitude, $label);
 
@@ -480,176 +568,52 @@ $form->map($latitude, $longitude, $label)->useTencentMap();
 $form->map($latitude, $longitude, $label)->useGoogleMap();
 ```
 
-## Slider
-Can be used to select the type of digital fields, such as age:
-```php
-$form->slider($column[, $label])->options(['max' => 100, 'min' => 1, 'step' => 1, 'postfix' => 'years old']);
-```
-More options please ref to https://github.com/IonDen/ion.rangeSlider#settings
-
-## Rich text editor
-
-The editor field refers to the network resource, and if there is a problem with the network refer to [form Component Management](/en/model-form-field-management.md) to remove the component.
-
-```php
-$form->editor($column[, $label]);
-```
-
-## Hidden field
-```php
-$form->hidden($column);
-```
-
-## Switch
-`On` and` off` pairs of switches with the values `1` and` 0`:
-```php
-$states = [
-    'on'  => ['value' => 1, 'text' => 'enable', 'color' => 'success'],
-    'off' => ['value' => 0, 'text' => 'disable', 'color' => 'danger'],
-];
-
-$form->switch($column[, $label])->states($states);
-```
-
 ## Display field
+
 Only display the fields and without any action:
+
 ```php
 $form->display($column[, $label]);
 ```
 
-## Divide
+## Divider
+
 ```php
-$form->divide();
+$form->divider();
+
+// OR
+
+$form->divider('Title');
 ```
 
 ## Html
-insert html,the argument passed in could be objects which impletements `Htmlable`、`Renderable`, or has method `__toString()`
+
+Insert html, the argument passed in could be objects which impletements `Htmlable`、`Renderable`, or has method `__toString()`
+
 ```php
 $form->html('html contents');
 ```
 
 ## Tags
-Insert the comma (,) separated string `tags`
+
+Insert the comma (`,`) separated string `tags`
+
 ```php
 $form->tags('keywords');
 ```
 
 ## Icon
+
+![icon](https://user-images.githubusercontent.com/1479100/82288317-cf676e00-99d4-11ea-92c5-a393bd4dfb64.png)
+
 Select the `font-awesome` icon.
+
 ```php
 $form->icon('icon');
 ```
 
-## HasMany
-
-One-to-many built-in tables for dealing with one-to-many relationships. Here is a simple example:
-
-There are two tables are one-to-many relationship:
-
-```sql
-CREATE TABLE `demo_painters` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `bio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE `demo_paintings` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `painter_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `body` text COLLATE utf8_unicode_ci NOT NULL,
-  `completed_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY painter_id (`painter_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-```
-
-The model of tables are:
-```php
-<?php
-
-namespace App\Models\Demo;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Painter extends Model
-{
-    public function paintings()
-    {
-        return $this->hasMany(Painting::class, 'painter_id');
-    }
-}
-
-<?php
-
-namespace App\Models\Demo;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Painting extends Model
-{
-    protected $fillable = ['title', 'body', 'completed_at'];
-
-    public function painter()
-    {
-        return $this->belongsTo(Painter::class, 'painter_id');
-    }
-}
-```
-
-Build the form code as follows:
-```php
-$form->display('id', 'ID');
-
-$form->text('username')->rules('required');
-$form->textarea('bio')->rules('required');
-
-$form->hasMany('paintings', function (Form\NestedForm $form) {
-    $form->text('title');
-    $form->image('body');
-    $form->datetime('completed_at');
-});
-
-$form->display('created_at', 'Created At');
-$form->display('updated_at', 'Updated At');
-```
-
-## Embeds
-
-Used to handle the `JSON` type field data of `mysql` or `object` type data of `mongodb`, or the data values of multiple fields can be stored in the form of the` JSON` string in the character type of mysql
-
-Such as the `extra` column of the `JSON` or string type in the orders table, used to store data for multiple fields:
+## Timezone
 
 ```php
-class Order extends Model
-{
-    protected $casts = [
-        'extra' => 'json',
-    ];
-}
+$form->timezone('timezone');
 ```
-And then use in the form:
-```php
-$form->embeds('extra', function ($form) {
-
-    $form->text('extra1')->rules('required');
-    $form->email('extra2')->rules('required');
-    $form->mobile('extra3');
-    $form->datetime('extra4');
-
-    $form->dateRange('extra5', 'extra6', 'Date range')->rules('required');
-
-});
-
-// Customize the title
-$form->embeds('extra', 'Extra', function ($form) {
-    ...
-});
-```
-
-Callback function inside the form element to create the method call and the outside is the same.

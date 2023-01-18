@@ -1,6 +1,6 @@
 # Access Control
 
-`laravel-admin` has built-in` RBAC` permissions control module, expand the left sidebar `Auth`, you can see user, permissions and roles management panel, the use of permissions control as follows:
+`laravel-admin` has built-in `RBAC` permissions control module, expand the left sidebar `Auth`, you can see users, permissions and roles management panel, the use of permissions control as follows:
 
 ## Route permission
 
@@ -20,7 +20,8 @@ For example, there is now a scene, here is a article module, we use create artic
 
 At first open `http://localhost/admi/auth/permissions`, fill up slug field with text `create-post`, and `Create post` in name field, then assign this permission to some roles.
 
-In your controller action: 
+In your controller action:
+
 ```php
 use Encore\Admin\Auth\Permission;
 
@@ -37,9 +38,9 @@ class PostController extends Controller
 ### example2
 
 If you want to control the page elements of the user's display, then you need to first define permissions, such as `delete-image` and `view-title-column`, respectively, to control the permissions to delete pictures and display a column in grid, then assign these two permissions to roles, add following code to the grid：
+
 ```php
 $grid->actions(function ($actions) {
-
     // The roles with this permission will not able to see the delete button in actions column.
     if (!Admin::user()->can('delete-image')) {
         $actions->disableDelete();
@@ -55,46 +56,55 @@ if (Admin::user()->can('view-title-column')) {
 ## Other methods
 
 Get current user object.
+
 ```php
 Admin::user();
 ```
 
 Get current user id.
+
 ```php
 Admin::user()->id;
 ```
 
 Get user's roles.
+
 ```php
 Admin::user()->roles;
 ```
 
 Get user's permissions.
+
 ```php
 Admin::user()->permissions;
 ```
 
 User is role.
+
 ```php
 Admin::user()->isRole('developer');
 ```
 
 User has permission.
+
 ```php
 Admin::user()->can('create-post');
 ```
 
-User don't has permission.
+User doesn't have a specific permission.
+
 ```php
 Admin::user()->cannot('delete-post');
 ```
 
-Is user super administrator.
+Is user a super administrator?
+
 ```php
 Admin::user()->isAdministrator();
 ```
 
-Is user in one of roles.
+Is user one of roles?
+
 ```php
 Admin::user()->inRoles(['editor', 'developer']);
 ```
@@ -104,38 +114,29 @@ Admin::user()->inRoles(['editor', 'developer']);
 You can use permission middleware in the routes to control the routing permission
 
 ```php
-
 // Allow roles `administrator` and `editor` access the routes under group.
 Route::group([
     'middleware' => 'admin.permission:allow,administrator,editor',
 ], function ($router) {
-
     $router->resource('users', UserController::class);
     ...
-    
 });
 
 // Deny roles `developer` and `operator` access the routes under group.
 Route::group([
     'middleware' => 'admin.permission:deny,developer,operator',
 ], function ($router) {
-
     $router->resource('users', UserController::class);
     ...
-    
 });
 
 // User has permission `edit-post`、`create-post` and `delete-post` can access routes under group.
 Route::group([
     'middleware' => 'admin.permission:check,edit-post,create-post,delete-post',
 ], function ($router) {
-
     $router->resource('posts', PostController::class);
     ...
-    
 });
 ```
 
-The usage of permission middleware is just as same as other middleware.
-
-
+The usage of permission middleware is just as same as other middlewares.

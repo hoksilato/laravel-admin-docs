@@ -5,11 +5,11 @@
 Use `chartjs` for example, first download [chartjs](http://chartjs.org/), put it under the public directory, such as in the `public/vendor/chartjs` directory
 
 Then import the component in `app/Admin/bootstrap.php`:
+
 ```php
 use Encore\Admin\Facades\Admin;
 
 Admin::js('/vendor/chartjs/dist/Chart.min.js');
-
 ```
 
 Create a new view file `resources/views/admin/charts/bar.blade.php`
@@ -65,14 +65,12 @@ And then you can introduce this chart view anywhere on the page:
 public function index()
 {
     return Admin::content(function (Content $content) {
-
         $content->header('chart');
         $content->description('.....');
-        
+
         $content->body(view('admin.charts.bar'));
     });
 }
-
 ```
 
-In the above way you can introduce any chart library. multi-chart page layout, refer to [view layout] (/en/layout.md)
+In the above way you can introduce any chart library. multi-chart page layout, refer to [view layout](/en/layout.md).

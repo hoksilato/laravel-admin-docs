@@ -17,20 +17,23 @@ CREATE TABLE `demo_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 ```
+
 The above table structure has three necessary fields `parent_id`, `order`, `title`, and the other fields are not required.
 
 The corresponding model is `app/Models/Category.php`:
+
 ```php
 <?php
 
 namespace App\Models\Demo;
 
+use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use ModelTree;
+    use ModelTree, AdminBuilder;
 
     protected $table = 'demo_categories';
 }
@@ -43,27 +46,28 @@ Table structure in the three fields `parent_id`,` order`, `title` field name can
 
 namespace App\Models\Demo;
 
+use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use ModelTree;
+    use ModelTree, AdminBuilder;
 
     protected $table = 'demo_categories';
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        
+
         $this->setParentColumn('pid');
         $this->setOrderColumn('sort');
         $this->setTitleColumn('name');
     }
 }
 ```
+
 ## Usage
-然后就是在页面中使用`model-tree`了：
 
 Then use `model-tree` in your page
 
@@ -83,7 +87,7 @@ use Encore\Admin\Tree;
 class CategoryController extends Controller
 {
     use ModelForm;
-    
+
     public function index()
     {
         return Admin::content(function (Content $content) {
@@ -93,7 +97,9 @@ class CategoryController extends Controller
     }
 }
 ```
+
 You can modify the display of branch in the following ways:
+
 ```php
 Category::tree(function ($tree) {
     $tree->branch(function ($branch) {
@@ -102,21 +108,17 @@ Category::tree(function ($tree) {
 
         return "{$branch['id']} - {$branch['title']} $logo";
     });
-})
+});
 ```
 
 The `$branch` parameter is array of current row data.
 
 If you want to modify the query of the model, use the following way:
+
 ```php
-
 Category::tree(function ($tree) {
-
     $tree->query(function ($model) {
         return $model->where('type', 1);
     });
-    
-})
+});
 ```
-
-

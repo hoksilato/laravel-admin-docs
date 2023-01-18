@@ -10,15 +10,15 @@
 $ composer require laravel-admin-ext/api-tester -vvv
 
 $ php artisan vendor:publish --tag=api-tester
-
 ```
+
 And then run the following command to import menus and permissions (which can also be added manually)
 
 ```shell
 $ php artisan admin:import api-tester
 ```
 
-Then you can find the entry link in the admin menu, `http://localhost/admin/api-tester`.
+Then you can find the entry link in the admin menu http://localhost/admin/api-tester.
 
 ## Usage
 
@@ -34,7 +34,7 @@ Open the `api-tester` page, you can see `api/test` on the left, select it and cl
 
 ### Login as
 
-`Login as` Fill in the user id you want to log in, you can log in as the user to request the API, add the following API:
+`Login as` fills in the user id you want to log in, you can log in as the user to request the API, add the following API:
 
 ```php
 use Illuminate\Http\Request;
@@ -43,11 +43,12 @@ Route::middleware('auth:api')->get('user', function (Request $request) {
     return $request->user();
 });
 ```
-Fill in the user ID in `Login as` input , then request the api and will respond with the user's model
+
+Fill in the user ID in `Login as` input, then request the api and will respond with the user's model
 
 ### Parameters
 
-Used to set the request parameters for api , the type can be a string or file, add the following API:
+Used to set the request parameters for api, the type can be a string or file, add the following API:
 
 ```php
 use Illuminate\Http\Request;

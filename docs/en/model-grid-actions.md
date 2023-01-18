@@ -1,6 +1,6 @@
 # Model grid row actions
 
-`model-grid` By default, there are two actions `edit` and `delete`, which can be turned off in the following way:
+`model-grid` by default, there are two actions `edit` and `delete`, which can be turned off in the following way:
 
 ```php
  $grid->actions(function ($actions) {
@@ -8,13 +8,14 @@
     $actions->disableEdit();
 });
 ```
+
 You can get the data for the current row by `$actions` parameter passed in:
+
 ```php
  $grid->actions(function ($actions) {
-    
     // the array of data for the current row
     $actions->row;
-    
+
     // gets the current row primary key value
     $actions->getKey();
 });
@@ -24,7 +25,6 @@ If you have a custom action button, you can add the following:
 
 ```php
 $grid->actions(function ($actions) {
-    
     // append an action.
     $actions->append('<a href=""><i class="fa fa-eye"></i></a>');
 
@@ -33,9 +33,14 @@ $grid->actions(function ($actions) {
 }
 ```
 
+## Custom actions
+
+> Starting with v1.7.3, the following documents are deprecated, please use [Custom actions](/en/model-grid-custom-actions.md) instead.
+
 If you have more complex actions, you can refer to the following ways:
 
 First define the action class:
+
 ```php
 <?php
 
@@ -55,14 +60,10 @@ class CheckRow
     protected function script()
     {
         return <<<SCRIPT
-
 $('.grid-check-row').on('click', function () {
-    
     // Your code.
     console.log($(this).data('id'));
-    
 });
-
 SCRIPT;
     }
 
@@ -72,25 +73,29 @@ SCRIPT;
 
         return "<a class='btn btn-xs btn-success fa fa-check grid-check-row' data-id='{$this->id}'></a>";
     }
-    
+
     public function __toString()
     {
         return $this->render();
     }
 }
 ```
+
 Then add the action:
+
 ```php
 $grid->actions(function ($actions) {
-    
     // add action
     $actions->append(new CheckRow($actions->getKey()));
 }
 ```
 
 Row manipulations with column conditions:
+
 For row attributes, you can use `$row->model()` array or `$row->column()` method.
-You need to set style after setting attributes. Otherwise style method will be by-passed 
+
+You need to set style after setting attributes. Otherwise style method will be by-passed
+
 ```php
 $grid->rows(function ($row) {
    // if relased column value is Yes
@@ -100,6 +105,5 @@ $grid->rows(function ($row) {
         // Set style of row
         $row->style("background-color:green");
     }
-
 });
 ```

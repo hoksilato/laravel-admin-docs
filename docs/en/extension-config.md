@@ -6,7 +6,7 @@ This tool will store the configuration data in the database
 
 ## Installation
 
-```
+```console
 $ composer require laravel-admin-ext/config
 
 $ php artisan migrate
@@ -33,11 +33,11 @@ class AppServiceProvider extends ServiceProvider
 
 Then run the command to import menus and permissions (which can also be added manually)
 
-```
+```console
 $ php artisan admin:import config
 ```
 
-Open `http://localhost/admin/config`.
+Open http://localhost/admin/config.
 
 ## Usage
 

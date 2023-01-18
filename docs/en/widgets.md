@@ -2,7 +2,7 @@
 
 ## Box
 
-`Encore\Admin\Widgets\Box` used to generate box components:
+`Encore\Admin\Widgets\Box` for generating box components:
 
 ```php
 use Encore\Admin\Widgets\Box;
@@ -18,26 +18,26 @@ $box->style('info');
 $box->solid();
 
 echo $box;
-
 ```
 
-The `$content` parameter is the content element of the Box, which can be either an implementation of the `Illuminate\Contracts\Support\Renderable` interface, or other printable variables.
+The `$content` parameter is the content element of the `Box`, which can be either an implementation of the `Illuminate\Contracts\Support\Renderable` interface, or other printable variables.
 
-`Box::title($title)` method is used to set the Box component title.
+The `Box::title($title)` method sets the `Box` component title.
 
-`Box::content($content)` method is used to set the content element of a Box component.
+The `Box::content($content)` method sets the content element of a `Box` component.
 
-`Box::removable()` method sets the Box component as removable.
+The `Box::removable()` method sets the `Box` component as removable.
 
-`Box::collapsable()` method sets the Box component as collapsable.
+The `Box::collapsable()` method sets the `Box` component as collapsable.
 
-`Box::style($style)` method sets the style of the Box component to fill in `primary`, `info`, `danger`, `warning`, `success`, `default`.
+The `Box::style($style)` method sets the style of the `Box` component to fill in `primary`, `info`, `danger`, `warning`, `success`, `default`.
 
-`Box::solid()` method adds a border to the Box component.
+The `Box::solid()` method adds a border to the `Box` component.
 
 ## Collapse
 
-`Encore\Admin\Widgets\Collapse` class used to generate folding components:
+`Encore\Admin\Widgets\Collapse` class for generating folding components:
+
 ```php
 use Encore\Admin\Widgets\Collapse;
 
@@ -47,18 +47,15 @@ $collapse->add('Bar', 'xxxxx');
 $collapse->add('Orders', new Table());
 
 echo $collapse->render();
-
 ```
 
-`Collapse::add($title, $content)` method is used to add a collapsed item to the collapsing component. The `$title` parameter sets the title of the item. The`$content` parameter is used to .
-
+`Collapse::add($title, $content)` method is used to add a collapsed item to the collapsing component. The `$title` parameter sets the title of the item. The `$content` parameter is used to .
 
 ## Form
 
 `Encore\Admin\Widgets\Form` class is used to quickly build a form:
 
 ```php
-
 $form = new Form();
 
 $form->action('example');
@@ -82,7 +79,7 @@ echo $form->render();
 
 `Form::method($method)` method is used to set the submit method of the form, the default is `POST` method.
 
-`Form::disablePjax()` disable pjax for form submit.
+`Form::disablePjax()` disables pjax for form submit.
 
 ## Infobox
 
@@ -94,7 +91,6 @@ use Encore\Admin\Widgets\InfoBox;
 $infoBox = new InfoBox('New Users', 'users', 'aqua', '/admin/users', '1024');
 
 echo $infoBox->render();
-
 ```
 
 Refer to the section on the `InfoBox` in the `index()` method of the home page layout file [HomeController.php](https://github.com/z-song/laravel-admin/blob/master/src/Console/stubs/HomeController.stub).
@@ -113,7 +109,6 @@ $tab->add('Table', new Table());
 $tab->add('Text', 'blablablabla....');
 
 echo $tab->render();
-
 ```
 
 `Tab::add($title, $content)` method is used to add new tab, `$title` is tab title, `$content` is tab content.
@@ -151,6 +146,4 @@ $rows = [
 $table = new Table($headers, $rows);
 
 echo $table->render();
-
 ```
-

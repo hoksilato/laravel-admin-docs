@@ -6,13 +6,13 @@ This tool is a web interface for manage Laravel's scheduled tasks
 
 ## Installation
 
-```
+```console
 $ composer require laravel-admin-ext/scheduling -vvv
 
 $ php artisan admin:import scheduling
 ```
 
-Then open `http://localhost/admin/scheduling`
+Then open http://localhost/admin/scheduling.
 
 ## Add tasks
 
@@ -24,11 +24,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('inspire')->everyTenMinutes();
-        
+
         $schedule->command('route:list')->dailyAt('02:00');
     }
 }
-
 ```
 
 And then you can see the tasks with details in the page, and you can also directly run these two tasks in the page.
